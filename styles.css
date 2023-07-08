@@ -23,6 +23,7 @@ line-height: 1.5;
 --x-color:hsl(235, 19%, 35%);
 --list-color:hsl(235, 19%, 35%);
 --input-bg:#ffffff;
+--circle-color:hsl(236, 33%, 92%);
 --very-light-gray: hsl(0, 0%, 98%);
 --very-light-grayish-blue: hsl(236, 33%, 92%);
 --light-grayish-blue: hsl(233, 11%, 84%);
@@ -37,6 +38,8 @@ line-height: 1.5;
     --x-color:hsl(235, 16%, 43%);
     --list-color:hsl(234, 39%, 85%);
     --page-bg:hsl(235, 21%, 11%);
+    --circle-color:hsl(237, 14%, 26%);
+
 
 }
 /*Dark mode colors*/
@@ -85,7 +88,7 @@ overflow-wrap: break-word;
 .todo-container{
     width: 541px;
     margin: 0 auto;
-    transform: translateY(-200px);
+    transform: translateY(-250px);
 }
 
 .todo-header{
@@ -101,6 +104,35 @@ overflow-wrap: break-word;
     font-weight: 700px;
     font-size:40px;
     
+}
+
+#input-task{
+    width: 100%;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--input-bg);
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+    border-radius: 0.2rem;
+    margin-top: 2rem;
+}
+
+.circle{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--circle-color);
+}
+
+#input{
+    display: block;
+    width: 90%;
+    border: none;
+    outline: none;
+    background-color: var(--input-bg);
+    color: var(--input-text);
 }
 
 @media(max-width:400px){
@@ -126,5 +158,9 @@ overflow-wrap: break-word;
     }
     .todo-header h2{
         font-size: 24px;
+    }
+
+    #input-task{
+        height: 48px;
     }
 }
