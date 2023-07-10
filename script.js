@@ -56,14 +56,15 @@ const saveData=()=>{
     localStorage.setItem("data", listContainer.innerHTML)
 }
 
+
 function showData(){
     listContainer.innerHTML=localStorage.getItem("data")
 }
-
-function countTask(){
-   getData=localStorage.getItem("data")
-  let showme=JSON.parse(getData)
-  return showme
-}
 showData()
-countTask()
+
+
+let storedArray = JSON.parse(localStorage.getItem("data"));
+
+  let arrayLength = storedArray.length;
+  console.log("Array length: " + arrayLength);
+
