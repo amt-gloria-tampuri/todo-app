@@ -13,46 +13,82 @@ const mediaQuery =window.matchMedia("(max-width:400px)")
 
 
 
-document.addEventListener("DOMContentLoaded",function(){
-    function enableDarkMode(){
-    document.body.classList.add('dark-switch')
-}
-function disableDarkMode(){
-     document.body.classList.remove('dark-switch')
-}
-switchIcon.onclick=function(){
-   const isDarkMode = localStorage.getItem('mode')==='dark';
-   if(isDarkMode){
-    disableDarkMode()
-    localStorage.setItem('mode','light')
+// document.addEventListener("DOMContentLoaded",function(){
+//     function enableDarkMode(){
+//     document.body.classList.add('dark-switch')
+//     localStorage.setItem('mode','dark')      
+    
 
-   }else{
-    enableDarkMode()
-    localStorage.setItem('mode','dark')      
+// }
+// function disableDarkMode(){
+//      document.body.classList.remove('dark-switch')
+//     localStorage.setItem('mode','light')
+    
 
-   }
+// }
+// let preferredmode = localStorage.getItem('mode')
 
-   let preferredmode = localStorage.getItem('mode')
-    if(preferredmode==='dark'){
-        icon.src='/images/icon-sun.svg';
-        heroBackground.classList.remove("hero-image")
-        heroBackground.classList.add("dark-hero")
-        console.log('dark');
-        enableDarkMode()
+// const saveMode=()=>{
+//     localStorage.setItem("mode", preferredmode )
+// }
 
-    }
-    else if(preferredmode==='light'){
-        icon.src='/images/icon-moon.svg';
-        heroBackground.classList.remove("dark-hero")
-        heroBackground.classList.add("hero-image")
-        disableDarkMode()
-    }
+// switchIcon.onclick=function(){
+//    const isDarkMode = localStorage.getItem('mode')==='dark';
+//    if(isDarkMode){
+//     disableDarkMode()
+//     saveMode()
 
-  
+//    }else{
+//     enableDarkMode()
+//     saveMode()
+//    }
+
+//     if(preferredmode==='dark'){
+//         icon.src='/images/icon-sun.svg';
+//         heroBackground.classList.remove("hero-image")
+//         heroBackground.classList.add("dark-hero")
+//         console.log('dark');
+//         enableDarkMode()
+//         saveMode()
+
+//     }
+//     else if(preferredmode==='light'){
+//         icon.src='/images/icon-moon.svg';
+//         heroBackground.classList.remove("dark-hero")
+//         heroBackground.classList.add("hero-image")
+//         disableDarkMode()
+//         saveMode()
+//     }    
    
-}
-})
+// }
+// })
 
+
+
+switchIcon.onclick=function(){
+        const setTheme= document.body;
+        setTheme.classList.toggle('dark-switch')
+    
+        let theme;
+    
+        if(setTheme.classList.contains('dark-switch')){
+            console.log('dark mode');
+            theme ='DARK'
+        }else{
+            console.log('Light mode');
+            theme='LIGHT'
+        }
+    
+        localStorage.setItem('PageTheme', JSON.stringify(theme))
+    
+    
+    let getTheme = JSON.parse(localStorage.getItem('PageTheme'));
+    console.log(getTheme);
+    
+    if(getTheme==='DARK'){
+        document.body.classList='dark-switch'
+    }
+}
 
 
 
@@ -72,11 +108,11 @@ addCircle.onclick=function(){
        span.appendChild(img)
         li.appendChild(span)
       
-        location.reload();    
-
+        // location.reload();    
     }
     inputBox.value=''
     saveData()
+    
 }
 
 
@@ -89,7 +125,7 @@ listContainer.onclick=function(e){
     else if(e.target.tagName=== 'IMG'){
         e.target.parentElement.parentElement.remove();
         saveData()
-        location.reload()
+        // location.reload()
     }
 }
 
@@ -108,14 +144,18 @@ console.log(listContainer.childElementCount);
 if(listContainer.childElementCount>=1){
   filterDiv.style.display="flex"
 }
-if (mediaQuery.matches || listContainer.childElementCount>=1){
-    mobileSort.classList.add('.sortOnMobile') 
+if (mediaQuery.matches && listContainer.childElementCount>=1){
+    mobileSort.classList.add('.sortOnMobile')
+    mobileSort.style.display='flex' 
 }
+
 showNumberOftask=()=>{
     let number = listContainer.childElementCount
     console.log(number);
+    const numberSpan = document.createElement('span')
+    numberSpan.textContent = number
     const item = number===1?'item':'items'
-    taskCount.innerText=`${number} ${item} left`
+    taskCount.appendChild()
 }
 showNumberOftask()
 
@@ -128,5 +168,5 @@ completedArray.forEach(function(selectedItem){
     selectedItem.parentNode.removeChild(selectedItem)
 })
     saveData()
-    location.reload()
+    // location.reload()
 }
