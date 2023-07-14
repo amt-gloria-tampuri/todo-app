@@ -72,12 +72,13 @@ overflow-wrap: break-word;
     min-width: 100vw;
     min-height: 100vh;   
     background-color: var(--page-bg);
+   
 }
 
 .dark-mode{
     background: url(images/bg-desktop-dark.jpg);
     background-color: switch;
-}
+}   
 
 .hero-image{
     width: 100%;
@@ -234,8 +235,13 @@ overflow-wrap: break-word;
     .sortOnMobile{
         display: none;
     }
-
-
+   
+    .active{
+        color: var(--bright-blue);
+    }
+    .dragging{
+        opacity:0.5 ;
+    }
 @media(max-width:400px){
     body{
         font-size: 12px;
@@ -296,7 +302,7 @@ overflow-wrap: break-word;
 .sortOnMobile{
     width: 100%;
     background-color: var(--input-bg);
-    /* display: flex; */
+    display: flex;
     padding: 1rem;
     justify-content: center;
     margin-top: 1rem;
