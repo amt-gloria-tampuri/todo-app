@@ -13,6 +13,7 @@ const mediaQuery =window.matchMedia("(max-width:400px)")
 const all= document.getElementById('all')
 const active= document.getElementById('active')
 const completed=document.getElementById('completed')
+const extra=document.getElementById('extra')
 
 
 darkModeToggle.addEventListener('click', function() {
@@ -101,6 +102,7 @@ console.log(listContainer.childElementCount);
 //show summary and sort
 if(listContainer.childElementCount>=1){
   filterDiv.style.display="flex"
+  extra.style.display='block'
 }
 if (mediaQuery.matches && listContainer.childElementCount>=1){
     mobileSort.classList.add('.sortOnMobile')

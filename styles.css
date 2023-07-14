@@ -242,6 +242,18 @@ overflow-wrap: break-word;
     .dragging{
         opacity:0.5 ;
     }
+
+    .drag-info{
+        color: var(--sort-color);
+        margin: 2rem auto;
+        text-align: center;
+    }
+
+    .extra{
+        display: none;
+    }
+
+
 @media(max-width:400px){
     body{
         font-size: 12px;
