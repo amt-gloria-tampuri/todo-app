@@ -13,7 +13,9 @@ const mediaQuery =window.matchMedia("(max-width:400px)")
 const all= document.getElementById('all')
 const active= document.getElementById('active')
 const completed=document.getElementById('completed')
-const filterButtons = document.querySelectorAll('.filter-button');
+const sall= document.getElementById('sall')
+const sactive= document.getElementById('sactive')
+const scompleted=document.getElementById('scompleted')
 
 const extra=document.getElementById('extra')
 
@@ -182,7 +184,61 @@ all.addEventListener('click', function() {
       }
     }
   }
-  
+
+
+//sort on small Screen
+
+sall.addEventListener('click', function() {
+  filterListSmall('all');
+});
+
+scompleted.addEventListener('click', function() {
+  filterListSmall('completed');
+});
+
+sactive.addEventListener('click', function() {
+  filterListSmall('active');
+});
+
+function filterListSmall(filter) {
+  const listItems = listContainer.children;
+
+  for (let i = 0; i < listItems.length; i++) {
+    const listItem = listItems[i];
+    switch (filter) {
+      case 'all':
+        listItem.style.display = 'block';
+        sall.classList.add('activecolor'); // Add a class to the "All" element
+        scompleted.classList.remove('activecolor'); // Remove the class from other elements
+        sactive.classList.remove('activecolor'); 
+        break;
+      case 'completed':
+        if (listItem.classList.contains('checked')) {
+          listItem.style.display = 'block';
+          sall.classList.remove('activecolor'); // Add a class to the "All" element
+          scompleted.classList.add('activecolor'); // Remove the class from other elements
+          sactive.classList.remove('activecolor'); 
+          
+        } else {
+          listItem.style.display = 'none';
+        }
+        break;
+      case 'active':
+        sall.classList.remove('activecolor'); // Add a class to the "All" element
+        scompleted.classList.remove('activecolor'); // Remove the class from other elements
+        sactive.classList.add('activecolor'); 
+        if (!listItem.classList.contains('checked')) {
+          listItem.style.display = 'block';
+        } else {
+          listItem.style.display = 'none';
+        }
+        break;
+    }
+  }
+}
+
+
+//_______________________________________________________________________________________________________  
 //Drag and drop
 
 const draggables=document.getElementsByTagName('li')
