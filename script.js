@@ -13,6 +13,8 @@ const mediaQuery =window.matchMedia("(max-width:400px)")
 const all= document.getElementById('all')
 const active= document.getElementById('active')
 const completed=document.getElementById('completed')
+const filterButtons = document.querySelectorAll('.filter-button');
+
 const extra=document.getElementById('extra')
 
 
@@ -149,19 +151,28 @@ all.addEventListener('click', function() {
   
     for (let i = 0; i < listItems.length; i++) {
       const listItem = listItems[i];
-  
       switch (filter) {
         case 'all':
           listItem.style.display = 'block';
+          all.classList.add('activecolor'); // Add a class to the "All" element
+          completed.classList.remove('activecolor'); // Remove the class from other elements
+          active.classList.remove('activecolor'); 
           break;
         case 'completed':
           if (listItem.classList.contains('checked')) {
             listItem.style.display = 'block';
+            all.classList.remove('activecolor'); // Add a class to the "All" element
+            completed.classList.add('activecolor'); // Remove the class from other elements
+            active.classList.remove('activecolor'); 
+            
           } else {
             listItem.style.display = 'none';
           }
           break;
         case 'active':
+          all.classList.remove('activecolor'); // Add a class to the "All" element
+          completed.classList.remove('activecolor'); // Remove the class from other elements
+          active.classList.add('activecolor'); 
           if (!listItem.classList.contains('checked')) {
             listItem.style.display = 'block';
           } else {

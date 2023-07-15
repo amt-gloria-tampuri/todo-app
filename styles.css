@@ -43,7 +43,7 @@ line-height: 1.5;
     --list-color:hsl(234, 39%, 85%);
     --page-bg:hsl(235, 21%, 11%);
     --circle-color:hsl(237, 14%, 26%);
-    --bright-blue: hsl(220, 98%, 61%)
+    --bright-blue: hsl(220, 98%, 61%);
     --sort-color: #5B5E7E;
     --check-background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%)
 
@@ -236,8 +236,9 @@ overflow-wrap: break-word;
         display: none;
     }
    
-    .active{
+    .activecolor{
         color: var(--bright-blue);
+        /* color: red; */
     }
     .dragging{
         opacity:0.5 ;
