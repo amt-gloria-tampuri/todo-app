@@ -205,7 +205,6 @@ overflow-wrap: break-word;
     } 
     #list-container li:hover span{
         display: grid;
-      
     }
 
     .actions{

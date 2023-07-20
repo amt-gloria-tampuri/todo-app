@@ -77,11 +77,12 @@ addCircle.onclick=function(){
 }
 
 
-//check completed task and removed task my clicking class icon
+//check completed task and remove  task my clicking close icon
 listContainer.onclick=function(e){
     if(e.target.tagName==="LI"){
         e.target.classList.toggle('checked')
         saveData()
+        location.reload()
     }
     else if(e.target.tagName=== 'IMG'){
         e.target.parentElement.parentElement.remove();
@@ -103,7 +104,7 @@ function showData(){
 showData()
 console.log(listContainer.childElementCount);
 
-//show summary and sort
+//show summary and sort buttons
 if(listContainer.childElementCount>=1){
   filterDiv.style.display="flex"
   extra.style.display='block'
@@ -116,19 +117,25 @@ if (mediaQuery.matches && listContainer.childElementCount>=1){
 //show number of task in list
 const showNumberOftask=()=>{
     let number = listContainer.childElementCount
-    console.log(number);
-    const item = number===1?'item':'items'
+   
+   const itemsLeft=document.querySelectorAll('li:not(.checked)')
+   const num = itemsLeft.length
+   console.log(num);
 
-    taskCount.textContent=(`${number} ${item} left`)
+    const item = num===1?'item':'items'
+
+    taskCount.textContent=(`${num} ${item} left`)
 }
 showNumberOftask()
+
+
 
 //clear completed task
 clearTasks.onclick=function(){
     
 const completedArray = Array.from(selectedItems)
 
-completedArray.forEach(function(selectedItem){
+completedArray.forEach((selectedItem)=>{
     selectedItem.parentNode.removeChild(selectedItem)
 })
     saveData()
@@ -156,15 +163,15 @@ all.addEventListener('click', function() {
       switch (filter) {
         case 'all':
           listItem.style.display = 'block';
-          all.classList.add('activecolor'); // Add a class to the "All" element
-          completed.classList.remove('activecolor'); // Remove the class from other elements
+          all.classList.add('activecolor'); 
+          completed.classList.remove('activecolor'); 
           active.classList.remove('activecolor'); 
           break;
         case 'completed':
           if (listItem.classList.contains('checked')) {
             listItem.style.display = 'block';
-            all.classList.remove('activecolor'); // Add a class to the "All" element
-            completed.classList.add('activecolor'); // Remove the class from other elements
+            all.classList.remove('activecolor'); 
+            completed.classList.add('activecolor'); 
             active.classList.remove('activecolor'); 
             
           } else {
@@ -172,8 +179,8 @@ all.addEventListener('click', function() {
           }
           break;
         case 'active':
-          all.classList.remove('activecolor'); // Add a class to the "All" element
-          completed.classList.remove('activecolor'); // Remove the class from other elements
+          all.classList.remove('activecolor'); 
+          completed.classList.remove('activecolor');
           active.classList.add('activecolor'); 
           if (!listItem.classList.contains('checked')) {
             listItem.style.display = 'block';
@@ -208,15 +215,15 @@ function filterListSmall(filter) {
     switch (filter) {
       case 'all':
         listItem.style.display = 'block';
-        sall.classList.add('activecolor'); // Add a class to the "All" element
-        scompleted.classList.remove('activecolor'); // Remove the class from other elements
+        sall.classList.add('activecolor'); 
+        scompleted.classList.remove('activecolor'); 
         sactive.classList.remove('activecolor'); 
         break;
       case 'completed':
         if (listItem.classList.contains('checked')) {
           listItem.style.display = 'block';
-          sall.classList.remove('activecolor'); // Add a class to the "All" element
-          scompleted.classList.add('activecolor'); // Remove the class from other elements
+          sall.classList.remove('activecolor'); 
+          scompleted.classList.add('activecolor'); 
           sactive.classList.remove('activecolor'); 
           
         } else {
@@ -224,8 +231,8 @@ function filterListSmall(filter) {
         }
         break;
       case 'active':
-        sall.classList.remove('activecolor'); // Add a class to the "All" element
-        scompleted.classList.remove('activecolor'); // Remove the class from other elements
+        sall.classList.remove('activecolor'); 
+        scompleted.classList.remove('activecolor');
         sactive.classList.add('activecolor'); 
         if (!listItem.classList.contains('checked')) {
           listItem.style.display = 'block';
