@@ -20,7 +20,7 @@ const scompleted=document.getElementById('scompleted')
 const extra=document.getElementById('extra')
 
 
-darkModeToggle.addEventListener('click', function() {
+darkModeToggle.addEventListener('click', ()=> {
   const darkModeEnabled = document.body.classList.toggle('dark-switch');
  
   localStorage.setItem('darkMode', darkModeEnabled);
@@ -37,7 +37,7 @@ darkModeToggle.addEventListener('click', function() {
   }
 });
 
-window.addEventListener('load', function() {
+window.addEventListener('load',()=> {
     const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
     
     if (darkModeEnabled) {
@@ -140,15 +140,15 @@ completedArray.forEach((selectedItem)=>{
 }
 
 //filter task
-all.addEventListener('click', function() {
+all.addEventListener('click', ()=> {
     filterList('all');
   });
   
-  completed.addEventListener('click', function() {
+  completed.addEventListener('click', ()=> {
     filterList('completed');
   });
   
-  active.addEventListener('click', function() {
+  active.addEventListener('click',()=> {
     filterList('active');
   });
   
@@ -162,7 +162,7 @@ all.addEventListener('click', function() {
       switch (filter) {
         case 'all':
           listItem.style.display = 'block';
-          
+
           all.classList.add('activecolor'); 
           completed.classList.remove('activecolor'); 
           active.classList.remove('activecolor');

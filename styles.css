@@ -176,11 +176,10 @@ overflow-wrap: break-word;
     left: 1rem;
 }
 
-/* #list-container li:hover::after{
-    content: url(images/icon-cross.svg);
-    position:absolute;
-    right: 2rem;
-} */
+#list-container li:hover::before{
+    content: url(images/Group\ 4.png); 
+    
+}
 
 
 #list-container .checked{
