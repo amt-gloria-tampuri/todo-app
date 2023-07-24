@@ -51,34 +51,33 @@ window.addEventListener('load', function() {
 
 
 
-//Add Task
-addCircle.onclick=function(){
-    if(inputBox.value ===''){
-        alert('Please type a task!')
-    }
-    else{
-    
-        let li = document.createElement('li');
-        li.innerHTML = inputBox.value;
-        listContainer.appendChild(li);
-        li.draggable=true;
-        let span=document.createElement("span");
-       let img =document.createElement('img');
-       img.src='images/icon-cross.svg'
-       span.appendChild(img)
-        li.appendChild(span)
-        li.classList.add=('draggable')
-        location.reload();
+inputBox.addEventListener("keyup", (event) => {
+  // Check if the inputBox value is empty
+  if (inputBox.value === '') {
+    alert('Please type something');
+  } else if (event.key === "Enter" || event.keyCode === 13) {
+    let li = document.createElement('li');
+    li.innerHTML = inputBox.value;
+    listContainer.appendChild(li);
+    li.draggable = true;
 
-    }
-    inputBox.value=''
-    saveData()
+    let span = document.createElement("span");
+    let img = document.createElement('img');
+    img.src = 'images/icon-cross.svg';
+    span.appendChild(img);
+    li.appendChild(span);
+
+    // Clear the input box after adding the item
+    inputBox.value = "";
     
-}
+    saveData();
+    location.reload();
+  }
+});
 
 
 //check completed task and remove  task my clicking close icon
-listContainer.onclick=function(e){
+listContainer.onclick=(e)=>{
     if(e.target.tagName==="LI"){
         e.target.classList.toggle('checked')
         saveData()
@@ -97,12 +96,11 @@ const saveData=()=>{
 }
 
 
-function showData(){
+const showData=()=>{
     listContainer.innerHTML=localStorage.getItem("data")
   
 }
 showData()
-console.log(listContainer.childElementCount);
 
 //show summary and sort buttons
 if(listContainer.childElementCount>=1){
@@ -116,11 +114,10 @@ if (mediaQuery.matches && listContainer.childElementCount>=1){
 
 //show number of task in list
 const showNumberOftask=()=>{
-    let number = listContainer.childElementCount
+    // let number = listContainer.childElementCount
    
    const itemsLeft=document.querySelectorAll('li:not(.checked)')
    const num = itemsLeft.length
-   console.log(num);
 
     const item = num===1?'item':'items'
 
@@ -131,7 +128,7 @@ showNumberOftask()
 
 
 //clear completed task
-clearTasks.onclick=function(){
+clearTasks.onclick=()=>{
     
 const completedArray = Array.from(selectedItems)
 
@@ -155,38 +152,44 @@ all.addEventListener('click', function() {
     filterList('active');
   });
   
-  function filterList(filter) {
+  const filterList=(filter)=> {
     const listItems = listContainer.children;
+    console.log(listItems);
   
     for (let i = 0; i < listItems.length; i++) {
       const listItem = listItems[i];
+      // console.log(listItem);
       switch (filter) {
         case 'all':
           listItem.style.display = 'block';
+          
           all.classList.add('activecolor'); 
           completed.classList.remove('activecolor'); 
-          active.classList.remove('activecolor'); 
+          active.classList.remove('activecolor');
+
           break;
         case 'completed':
           if (listItem.classList.contains('checked')) {
             listItem.style.display = 'block';
-            all.classList.remove('activecolor'); 
-            completed.classList.add('activecolor'); 
-            active.classList.remove('activecolor'); 
             
           } else {
             listItem.style.display = 'none';
           }
+          all.classList.remove('activecolor'); 
+            completed.classList.add('activecolor'); 
+            active.classList.remove('activecolor'); 
+            
           break;
         case 'active':
-          all.classList.remove('activecolor'); 
-          completed.classList.remove('activecolor');
-          active.classList.add('activecolor'); 
+         
           if (!listItem.classList.contains('checked')) {
             listItem.style.display = 'block';
           } else {
             listItem.style.display = 'none';
           }
+          all.classList.remove('activecolor'); 
+          completed.classList.remove('activecolor');
+          active.classList.add('activecolor'); 
           break;
       }
     }
@@ -251,13 +254,11 @@ function filterListSmall(filter) {
 const draggables=document.getElementsByTagName('li')
 const draggablesArray = Array.from(draggables);
 
-console.log(draggablesArray);
 draggablesArray.forEach(draggable=>{
 draggable.draggable=true;
 })
 draggablesArray.forEach(draggable=>{
   draggable.addEventListener('dragstart', ()=>{
-  console.log('dragstart');
     draggable.classList.add('dragging')
   })
   draggable.addEventListener('dragend',()=>{

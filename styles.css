@@ -23,6 +23,7 @@ line-height: 1.5;
 --x-color:hsl(235, 19%, 35%);
 --list-color:hsl(235, 19%, 35%);
 --input-bg:#ffffff;
+--bright-blue: hsl(220, 98%, 61%);
 --circle-color:hsl(236, 33%, 92%);
 --sort-color:hsl(236, 9%, 61%);
 --very-light-gray: hsl(0, 0%, 98%);
@@ -30,8 +31,8 @@ line-height: 1.5;
 --light-grayish-blue: hsl(233, 11%, 84%);
 --dark-grayish-blue: hsl(236, 9%, 61%);
 --very-dark-grayish-blue: hsl(235, 19%, 35%);
---bright-blue: hsl(220, 98%, 61%)
---check-background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%)
+--check-background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
+--gut:hsl(235, 19%, 35%);
 
 }
 .dark-switch{
@@ -227,6 +228,11 @@ overflow-wrap: break-word;
         cursor: pointer;
     }
 
+    .filter-data p:hover{
+        color: var(--list-color)
+        ;
+    }
+
     .clear{
         cursor: pointer;
     }
@@ -245,6 +251,7 @@ overflow-wrap: break-word;
 
     .drag-info{
         color: var(--sort-color);
+        font-size: 14px;
         margin: 2rem auto;
         text-align: center;
     }
