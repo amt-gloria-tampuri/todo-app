@@ -174,12 +174,15 @@ overflow-wrap: break-word;
     background-size: cover;
     background-position: center;
     left: 1rem;
+    transition: border 0.3s ease; /* Add transition for smooth hover effect */
+
 }
 
-#list-container li:hover::before{
-    content: url(images/Group\ 4.png); 
-    
-}
+#list-container li:hover:not(.checked)::before {
+    content: url(images/Group\ 4.png);
+    border: none;
+    top: 1.2rem;
+  }
 
 
 #list-container .checked{
