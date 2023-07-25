@@ -242,8 +242,8 @@ overflow-wrap: break-word;
    
     .activecolor{
         color: var(--bright-blue);
-        /* color: red; */
     }
+    
     .dragging{
         opacity:0.5 ;
     }
