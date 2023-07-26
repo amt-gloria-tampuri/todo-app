@@ -10,12 +10,7 @@ const clearTasks=document.getElementById('clearTask')
 const selectedItems =document.getElementsByClassName('checked')
 const mobileSort = document.getElementById('mobileSort')
 const mediaQuery =window.matchMedia("(max-width:400px)")
-const all= document.getElementById('all')
-const active= document.getElementById('active')
-const completed=document.getElementById('completed')
-const sall= document.getElementById('sall')
-const sactive= document.getElementById('sactive')
-const scompleted=document.getElementById('scompleted')
+
 
 const extra=document.getElementById('extra')
 
@@ -142,24 +137,13 @@ completedArray.forEach((selectedItem)=>{
     location.reload()
 }
 
-//filter task
-all.addEventListener('click', ()=> {
-    filterList('all');
-  });
-  
-  completed.addEventListener('click', ()=> {
-    filterList('completed');
 
-  });
-  
-  active.addEventListener('click',()=> {
-    filterList('active');
-
-  });
-  
+//filter task  
   const filterList=(filter)=> {
     const listItems = listContainer.children;
     console.log(listItems);
+    const listItemsArray = Array.from(listContainer.children);
+   
   
     for (let i = 0; i < listItems.length; i++) {
       const listItem = listItems[i];
@@ -167,11 +151,14 @@ all.addEventListener('click', ()=> {
       switch (filter) {
 
         case 'completed':
-          if (listItem.classList.contains('checked')) {
-            listItem.style.display = 'block';
-          } else {
-            listItem.style.display = 'none';
-          }
+          listItemsArray.forEach((listItem) => {
+            if (listItem.classList.contains('checked')) {
+              listItem.style.display = 'block';
+            } else {
+              listItem.style.display = 'none';
+            }
+          });
+      
           all.classList.remove('activecolor'); 
             completed.classList.add('activecolor'); 
             active.classList.remove('activecolor'); 
@@ -223,59 +210,38 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
   }
 });
+const allElements = document.querySelectorAll('.all');
+allElements.forEach((all) =>
+  all.addEventListener('click', () => {
+    filterList('all');
+  })
+);
+allElements.forEach((all) =>
+  all.addEventListener('touchstart', () => {
+    filterList('all');
+  })
+);
 
+const completedElements = document.querySelectorAll('.completed');
+completedElements.forEach((completed) =>
+  completed.addEventListener('click', () => {
+    filterList('completed');
+  })
+);
 
-//sort on small Screen
+completedElements.forEach((completed) =>
+  completed.addEventListener('touchstart', () => {
+    filterList('completed');
+  })
+);
 
-sall.addEventListener('click', function() {
-  filterListSmall('all');
-});
-
-scompleted.addEventListener('click', function() {
-  filterListSmall('completed');
-});
-
-sactive.addEventListener('click', function() {
-  filterListSmall('active');
-});
-
-function filterListSmall(filter) {
-  const listItems = listContainer.children;
-
-  for (let i = 0; i < listItems.length; i++) {
-    const listItem = listItems[i];
-    switch (filter) {
-      case 'all':
-        listItem.style.display = 'block';
-        sall.classList.add('activecolor'); 
-        scompleted.classList.remove('activecolor'); 
-        sactive.classList.remove('activecolor'); 
-        break;
-      case 'completed':
-        if (listItem.classList.contains('checked')) {
-          listItem.style.display = 'block';
-          sall.classList.remove('activecolor'); 
-          scompleted.classList.add('activecolor'); 
-          sactive.classList.remove('activecolor'); 
-          
-        } else {
-          listItem.style.display = 'none';
-        }
-        break;
-      case 'active':
-        sall.classList.remove('activecolor'); 
-        scompleted.classList.remove('activecolor');
-        sactive.classList.add('activecolor'); 
-        if (!listItem.classList.contains('checked')) {
-          listItem.style.display = 'block';
-        } else {
-          listItem.style.display = 'none';
-        }
-        break;
-    }
-  }
-}
-
+const activeElements =document.querySelectorAll('.active')
+activeElements.forEach((active)=>active.addEventListener('click', () => {
+  filterList('active');
+}))
+activeElements.forEach((active)=>active.addEventListener('touchstart', () => {
+  filterList('active');
+}))
 
 //_______________________________________________________________________________________________________  
 //Drag and drop

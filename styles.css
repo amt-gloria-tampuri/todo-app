@@ -181,7 +181,7 @@ overflow-wrap: break-word;
 #list-container li:hover:not(.checked)::before {
     content: url(images/Group\ 4.png);
     border: none;
-    top: 1.2rem;
+    /* top: 1.2rem; */
   }
 
 
@@ -234,6 +234,10 @@ overflow-wrap: break-word;
         color: var(--list-color)
         ;
     }
+    .sortOnMobile p{
+        cursor: pointer;
+
+    }
 
     .clear{
         cursor: pointer;
@@ -261,7 +265,7 @@ overflow-wrap: break-word;
     .extra{
         display: none;
     }
-
+    
 
 @media(max-width:400px){
     body{
@@ -330,5 +334,8 @@ overflow-wrap: break-word;
     border-radius: 0.3rem;
     color: var(--sort-color);
 
+}
+#mobileSort p{
+    cursor: pointer;
 }
 }
