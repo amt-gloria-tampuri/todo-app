@@ -139,56 +139,61 @@ completedArray.forEach((selectedItem)=>{
 
 
 //filter task  
-  const filterList=(filter)=> {
-    const listItems = listContainer.children;
-    console.log(listItems);
-    const listItemsArray = Array.from(listContainer.children);
-   
-  
-    for (let i = 0; i < listItems.length; i++) {
-      const listItem = listItems[i];
-      console.log(listItem);
-      switch (filter) {
+const filterList = (filter) => {
+  const listItemsArray = Array.from(listContainer.children);
 
-        case 'completed':
-          listItemsArray.forEach((listItem) => {
-            if (listItem.classList.contains('checked')) {
-              listItem.style.display = 'block';
-            } else {
-              listItem.style.display = 'none';
-            }
-          });
-      
-          all.classList.remove('activecolor'); 
-            completed.classList.add('activecolor'); 
-            active.classList.remove('activecolor'); 
-            
-          break;
-        case 'active':
-         
-          if (!listItem.classList.contains('checked')) {
-            listItem.style.display = 'block';
-            
-          } else {
+  for (let i = 0; i < listItemsArray.length; i++) {
+    const listItem = listItemsArray[i];
+
+    switch (filter) {
+      case 'completed':
+        if (listItem.classList.contains('checked')) {
+          listItem.style.display = 'block';
+          listItem.addEventListener('click', () => {
+            // Remove the item from the 'completed' list
             listItem.style.display = 'none';
-          }
-          all.classList.remove('activecolor'); 
-          completed.classList.remove('activecolor');
-          active.classList.add('activecolor'); 
-          break;
-          case 'all':
-            listItem.style.display = 'block';
-            all.classList.add('activecolor'); 
-            completed.classList.remove('activecolor'); 
-            active.classList.remove('activecolor');
-  
-            break;
-      }
-    
-   // Save the active filter state to localStorage
-  localStorage.setItem('activeFilter', filter);
+            saveData();
+          });
+        } else {
+          listItem.style.display = 'none';
+        }
+
+        all.classList.remove('activecolor');
+        completed.classList.add('activecolor');
+        active.classList.remove('activecolor');
+        break;
+
+      case 'active':
+        if (!listItem.classList.contains('checked')) {
+          listItem.style.display = 'block';
+          listItem.addEventListener('click', () => {
+            // Add the 'checked' class and remove the item from the 'active' list
+            listItem.classList.add('checked');
+            listItem.style.display = 'none';
+            saveData();
+          });
+        } else {
+          listItem.style.display = 'none';
+        }
+
+        all.classList.remove('activecolor');
+        completed.classList.remove('activecolor');
+        active.classList.add('activecolor');
+        break;
+
+      case 'all':
+        listItem.style.display = 'block';
+        all.classList.add('activecolor');
+        completed.classList.remove('activecolor');
+        active.classList.remove('activecolor');
+        break;
+    }
   }
-}
+
+  // Save the active filter state to localStorage
+  localStorage.setItem('activeFilter', filter);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   const activeFilter = localStorage.getItem('activeFilter');
 
