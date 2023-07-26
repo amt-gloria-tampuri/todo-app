@@ -149,6 +149,11 @@ const filterList = (filter) => {
       case 'completed':
         if (listItem.classList.contains('checked')) {
           listItem.style.display = 'block';
+          listItem.addEventListener('click', () => {
+            listItem.style.display = 'none';
+            console.log('nonenoe');
+            saveData();
+          });
           
         } else {
           listItem.style.display = 'none';
@@ -162,6 +167,10 @@ const filterList = (filter) => {
       case 'active':
         if (!listItem.classList.contains('checked')) {
           listItem.style.display = 'block';
+          listItem.addEventListener('click', () => {
+            listItem.style.display = 'none';
+            saveData();
+          });
         
         } else {
           listItem.style.display = 'none';

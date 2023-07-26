@@ -265,7 +265,9 @@ overflow-wrap: break-word;
     .extra{
         display: none;
     }
-    
+    .hide{
+        display: none;
+    }
 
 @media(max-width:400px){
     body{
