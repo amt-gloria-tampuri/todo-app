@@ -149,11 +149,7 @@ const filterList = (filter) => {
       case 'completed':
         if (listItem.classList.contains('checked')) {
           listItem.style.display = 'block';
-          listItem.addEventListener('click', () => {
-            // Remove the item from the 'completed' list
-            listItem.style.display = 'none';
-            saveData();
-          });
+          
         } else {
           listItem.style.display = 'none';
         }
@@ -166,12 +162,7 @@ const filterList = (filter) => {
       case 'active':
         if (!listItem.classList.contains('checked')) {
           listItem.style.display = 'block';
-          listItem.addEventListener('click', () => {
-            // Add the 'checked' class and remove the item from the 'active' list
-            listItem.classList.add('checked');
-            listItem.style.display = 'none';
-            saveData();
-          });
+        
         } else {
           listItem.style.display = 'none';
         }
@@ -183,6 +174,7 @@ const filterList = (filter) => {
 
       case 'all':
         listItem.style.display = 'block';
+
         all.classList.add('activecolor');
         completed.classList.remove('activecolor');
         active.classList.remove('activecolor');
