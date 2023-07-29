@@ -181,7 +181,7 @@ overflow-wrap: break-word;
 #list-container li:hover:not(.checked)::before {
     content: url(images/Group\ 4.png);
     border: none;
-    /* top: 1.2rem; */
+    top: 1rem;
   }
 
 

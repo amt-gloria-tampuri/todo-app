@@ -10,8 +10,6 @@ const clearTasks=document.getElementById('clearTask')
 const selectedItems =document.getElementsByClassName('checked')
 const mobileSort = document.getElementById('mobileSort')
 const mediaQuery =window.matchMedia("(max-width:400px)")
-
-
 const extra=document.getElementById('extra')
 
 
@@ -42,6 +40,7 @@ window.addEventListener('load',()=> {
 
     }
   });
+
   
 
 
@@ -74,12 +73,8 @@ inputBox.addEventListener("keyup", (event) => {
 
 //check completed task and remove  task my clicking close icon
 listContainer.onclick=(e)=>{
-    if(e.target.tagName==="LI"){
-        e.target.classList.toggle('checked')
-        saveData()
-        location.reload()
-    }
-    else if(e.target.tagName=== 'IMG'){
+   
+     if(e.target.tagName=== 'IMG'){
         e.target.parentElement.parentElement.remove();
         saveData()
         location.reload()
@@ -139,61 +134,150 @@ completedArray.forEach((selectedItem)=>{
 
 
 //filter task  
-const filterList = (filter) => {
-  const listItemsArray = Array.from(listContainer.children);
+// const filterList = (filter) => {
+//   const listItemsArray = Array.from(listContainer.children);
 
-  for (let i = 0; i < listItemsArray.length; i++) {
-    const listItem = listItemsArray[i];
+//   for (let i = 0; i < listItemsArray.length; i++) {
+//     const listItem = listItemsArray[i];
 
-    switch (filter) {
-      case 'completed':
-        if (listItem.classList.contains('checked')) {
-          listItem.style.display = 'block';
-          listItem.addEventListener('click', () => {
-            listItem.style.display = 'none';
-            console.log('nonenoe');
-            saveData();
-          });
+//     switch (filter) {
+//       case 'completed':
+//         if (listItem.classList.contains('checked')) {
+//           listItem.style.display = 'block';
+//           listItem.addEventListener('click', () => {
+//             listItem.style.display = 'none';
+//             console.log('nonenoe');
+//             saveData();
+//           });
           
-        } else {
-          listItem.style.display = 'none';
-        }
+//         } else {
+//           listItem.style.display = 'none';
+//         }
 
-        all.classList.remove('activecolor');
-        completed.classList.add('activecolor');
-        active.classList.remove('activecolor');
-        break;
+//         all.classList.remove('activecolor');
+//         completed.classList.add('activecolor');
+//         active.classList.remove('activecolor');
+//         break;
 
-      case 'active':
-        if (!listItem.classList.contains('checked')) {
-          listItem.style.display = 'block';
-          listItem.addEventListener('click', () => {
-            listItem.style.display = 'none';
-            saveData();
-          });
+//       case 'active':
+//         if (!listItem.classList.contains('checked')) {
+//           listItem.style.display = 'block';
+//           listItem.addEventListener('click', () => {
+//             listItem.style.display = 'none';
+//             saveData();
+//           });
         
-        } else {
-          listItem.style.display = 'none';
-        }
+//         } else {
+//           listItem.style.display = 'none';
+//         }
 
-        all.classList.remove('activecolor');
-        completed.classList.remove('activecolor');
-        active.classList.add('activecolor');
-        break;
+//         all.classList.remove('activecolor');
+//         completed.classList.remove('activecolor');
+//         active.classList.add('activecolor');
+//         break;
 
-      case 'all':
-        listItem.style.display = 'block';
+//       case 'all':
+//         listItem.style.display = 'block';
 
-        all.classList.add('activecolor');
-        completed.classList.remove('activecolor');
-        active.classList.remove('activecolor');
-        break;
-    }
-  }
+//         all.classList.add('activecolor');
+//         completed.classList.remove('activecolor');
+//         active.classList.remove('activecolor');
+//         break;
+//     }
+//   }
 
   // Save the active filter state to localStorage
-  localStorage.setItem('activeFilter', filter);
-};
+//   localStorage.setItem('activeFilter', filter);
+// };
+
+document.addEventListener('DOMContentLoaded', () => {
+ 
+  // Load the active filter state from localStorage or set to 'all' by default
+const listItems = document.querySelectorAll('#list-container li');
+
+  let activeFilter = localStorage.getItem('activeFilter') || 'all';
+  updateFilter(activeFilter);
+
+
+  const allElements = document.querySelectorAll('.all');
+allElements.forEach((all) =>
+all.addEventListener('click', () => {
+  activeFilter = 'all';
+  updateFilter(activeFilter);
+}))
+
+const completedElements = document.querySelectorAll('.completed');
+completedElements.forEach((completed) =>
+  completed.addEventListener('click', () => {
+    activeFilter = 'completed';
+    updateFilter(activeFilter);
+    location.reload()
+  })
+);
+
+const activeElements =document.querySelectorAll('.active')
+activeElements.forEach((active)=>
+active.addEventListener('click', () => {
+  activeFilter = 'active';
+    updateFilter(activeFilter);
+    location.reload()
+
+}))
+
+
+  function updateFilter(filter) {
+    
+    listItems.forEach((listItem) => {
+      switch (filter) {
+        case 'all':
+          listItem.style.display = 'block';
+          break;
+        case 'active':
+          if (!listItem.classList.contains('checked')) {
+            listItem.style.display = 'block';
+          } else {
+            listItem.style.display = 'none';
+          }
+          break;
+        case 'completed':
+          if (listItem.classList.contains('checked')) {
+            listItem.style.display = 'block';
+          } else {
+            listItem.style.display = 'none';
+          }
+          break;
+      }
+    });
+
+    // Update the active filter state in localStorage
+    localStorage.setItem('activeFilter', filter);
+  }
+
+  // Add event listener for list items
+  listItems.forEach((listItem) => {
+    listItem.addEventListener('click', () => {
+      if (activeFilter === 'all') {
+        // Toggle the 'checked' class on click in 'all' filter
+        listItem.classList.toggle('checked');
+
+      } else if (activeFilter === 'active') {
+        // Add 'checked' class on click in 'active' filter
+        listItem.classList.add('checked');
+      } else if (activeFilter === 'completed') {
+        // Remove the list item on click in 'completed' filter
+        listItem.classList.remove('checked');
+      }
+  location.reload()
+
+      saveData();
+    });
+  });
+
+  function saveData() {
+    localStorage.setItem("data", listContainer.innerHTML)
+  }
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const activeFilter = localStorage.getItem('activeFilter');
@@ -216,62 +300,38 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
   }
 });
-const allElements = document.querySelectorAll('.all');
-allElements.forEach((all) =>
-  all.addEventListener('click', () => {
-    filterList('all');
-  })
-);
-allElements.forEach((all) =>
-  all.addEventListener('touchstart', () => {
-    filterList('all');
-  })
-);
 
-const completedElements = document.querySelectorAll('.completed');
-completedElements.forEach((completed) =>
-  completed.addEventListener('click', () => {
-    filterList('completed');
-  })
-);
 
-completedElements.forEach((completed) =>
-  completed.addEventListener('touchstart', () => {
-    filterList('completed');
-  })
-);
 
-const activeElements =document.querySelectorAll('.active')
-activeElements.forEach((active)=>active.addEventListener('click', () => {
-  filterList('active');
-}))
-activeElements.forEach((active)=>active.addEventListener('touchstart', () => {
-  filterList('active');
-}))
 
 //_______________________________________________________________________________________________________  
 //Drag and drop
-
+//to get all li elements
 const draggables=document.getElementsByTagName('li')
+
+//to put all li elements in an array
 const draggablesArray = Array.from(draggables);
 
-draggablesArray.forEach(draggable=>{
-draggable.draggable=true;
-})
+//when we start dragging a li
 draggablesArray.forEach(draggable=>{
   draggable.addEventListener('dragstart', ()=>{
+    //when the drag starts we add the dragging class.to make it visible
     draggable.classList.add('dragging')
   })
+  //remove the dragging class when the drag stops
   draggable.addEventListener('dragend',()=>{
     draggable.classList.remove('dragging')
   })
 })
 
 // 
-
+//function used when we are dragging an element within the list container
 listContainer.addEventListener('dragover', (e) => {
-  e.preventDefault();
+  e.preventDefault(); //allows dropping the element
+  //selecting the element which is currently being dragged. it has the dragging class.
   const draggable = document.querySelector('.dragging');
+
+  //getting the y position of our cursor from the event.(e.clientY is the position of the cursor on our screen)
   const afterElement = getDragAfterElement(listContainer, e.clientY);
 
   if (afterElement && listContainer.contains(afterElement)) {
@@ -280,19 +340,33 @@ listContainer.addEventListener('dragover', (e) => {
     listContainer.appendChild(draggable);
   }
 });
-
+// function to show where(the position) of the drag element
 function getDragAfterElement(container, y) {
+
+  //selecting elements that can be dragged.
   const draggableElements = [...container.querySelectorAll(':not(.dragging)')];
 
+
+  //loop through the list of elements that are draggable and determine which single element which is directly after our mouse cursor position that we pass in.y=position of our mouse cursor.
   return draggableElements.reduce((closest, child) => {
+
+    //child is each element which is draggable
+    //closest is the element we are closest to after our mouse cursor
+    
+    //box is the bounding box of each elements. shows positions of each elementt on the screen
     const box = child.getBoundingClientRect();
+
+    //getting the center of the box
+    //if offset is negative shows we are hovering above the element. if its positive we are hovering below
+    //getting center of our box
     const offset = y - box.top - box.height / 2;
 
+/// Here, we are looking for elements that less than negative and finding the onwwhich closest to offset
     if (offset < 0 && offset > closest.offset) {
       return { offset: offset, element: child };
     } else {
       return closest;
     }
-  }, { offset: Number.NEGATIVE_INFINITY, element: null }).element;
+  }, { offset: Number.NEGATIVE_INFINITY, element: null }).element; //this makes sure our initial offset has the greatest negative number
 }
   
