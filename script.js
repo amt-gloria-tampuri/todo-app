@@ -71,7 +71,7 @@ inputBox.addEventListener("keyup", (event) => {
 
 
 
-//check completed task and remove  task my clicking close icon
+// remove  task my clicking close icon
 listContainer.onclick=(e)=>{
    
      if(e.target.tagName=== 'IMG'){
@@ -133,68 +133,14 @@ completedArray.forEach((selectedItem)=>{
 }
 
 
-//filter task  
-// const filterList = (filter) => {
-//   const listItemsArray = Array.from(listContainer.children);
 
-//   for (let i = 0; i < listItemsArray.length; i++) {
-//     const listItem = listItemsArray[i];
 
-//     switch (filter) {
-//       case 'completed':
-//         if (listItem.classList.contains('checked')) {
-//           listItem.style.display = 'block';
-//           listItem.addEventListener('click', () => {
-//             listItem.style.display = 'none';
-//             console.log('nonenoe');
-//             saveData();
-//           });
-          
-//         } else {
-//           listItem.style.display = 'none';
-//         }
-
-//         all.classList.remove('activecolor');
-//         completed.classList.add('activecolor');
-//         active.classList.remove('activecolor');
-//         break;
-
-//       case 'active':
-//         if (!listItem.classList.contains('checked')) {
-//           listItem.style.display = 'block';
-//           listItem.addEventListener('click', () => {
-//             listItem.style.display = 'none';
-//             saveData();
-//           });
-        
-//         } else {
-//           listItem.style.display = 'none';
-//         }
-
-//         all.classList.remove('activecolor');
-//         completed.classList.remove('activecolor');
-//         active.classList.add('activecolor');
-//         break;
-
-//       case 'all':
-//         listItem.style.display = 'block';
-
-//         all.classList.add('activecolor');
-//         completed.classList.remove('activecolor');
-//         active.classList.remove('activecolor');
-//         break;
-//     }
-//   }
-
-  // Save the active filter state to localStorage
-//   localStorage.setItem('activeFilter', filter);
-// };
 
 document.addEventListener('DOMContentLoaded', () => {
  
+  const listItems = document.querySelectorAll('#list-container li');
+  
   // Load the active filter state from localStorage or set to 'all' by default
-const listItems = document.querySelectorAll('#list-container li');
-
   let activeFilter = localStorage.getItem('activeFilter') || 'all';
   updateFilter(activeFilter);
 
@@ -204,6 +150,8 @@ allElements.forEach((all) =>
 all.addEventListener('click', () => {
   activeFilter = 'all';
   updateFilter(activeFilter);
+  location.reload()
+
 }))
 
 const completedElements = document.querySelectorAll('.completed');
@@ -212,6 +160,7 @@ completedElements.forEach((completed) =>
     activeFilter = 'completed';
     updateFilter(activeFilter);
     location.reload()
+
   })
 );
 
@@ -225,12 +174,16 @@ active.addEventListener('click', () => {
 }))
 
 
+//display items by filter
   function updateFilter(filter) {
     
     listItems.forEach((listItem) => {
       switch (filter) {
         case 'all':
           listItem.style.display = 'block';
+          all.classList.add('activecolor');
+          completed.classList.remove('activecolor');
+          active.classList.remove('activecolor');
           break;
         case 'active':
           if (!listItem.classList.contains('checked')) {
@@ -238,6 +191,10 @@ active.addEventListener('click', () => {
           } else {
             listItem.style.display = 'none';
           }
+          active.classList.add('activecolor');
+      all.classList.remove('activecolor');
+      completed.classList.remove('activecolor');
+          
           break;
         case 'completed':
           if (listItem.classList.contains('checked')) {
@@ -245,6 +202,9 @@ active.addEventListener('click', () => {
           } else {
             listItem.style.display = 'none';
           }
+          completed.classList.add('activecolor');
+          all.classList.remove('activecolor');
+          active.classList.remove('activecolor');
           break;
       }
     });
@@ -253,7 +213,7 @@ active.addEventListener('click', () => {
     localStorage.setItem('activeFilter', filter);
   }
 
-  // Add event listener for list items
+  // Add event listener for list items by the filter
   listItems.forEach((listItem) => {
     listItem.addEventListener('click', () => {
       if (activeFilter === 'all') {
@@ -273,33 +233,9 @@ active.addEventListener('click', () => {
     });
   });
 
-  function saveData() {
-    localStorage.setItem("data", listContainer.innerHTML)
-  }
+ saveData() 
 });
 
-
-document.addEventListener('DOMContentLoaded', () => {
-  const activeFilter = localStorage.getItem('activeFilter');
-
-  switch (activeFilter) {
-    case 'all':
-      all.classList.add('activecolor');
-      completed.classList.remove('activecolor');
-      active.classList.remove('activecolor');
-      break;
-    case 'completed':
-      all.classList.remove('activecolor');
-      completed.classList.add('activecolor');
-      active.classList.remove('activecolor');
-      break;
-    case 'active':
-      all.classList.remove('activecolor');
-      completed.classList.remove('activecolor');
-      active.classList.add('activecolor');
-      break;
-  }
-});
 
 
 
@@ -324,6 +260,39 @@ draggablesArray.forEach(draggable=>{
   })
 })
 
+
+
+// function to show where(the position) of the drag element
+function getDragAfterElement(container, y) {
+
+  //selecting elements that can be dragged.
+  const draggableElements = [...container.querySelectorAll(':not(.dragging)')];
+
+
+  //loop through the list of elements that are draggable and determine which single element which is directly after our mouse cursor position that we pass in.y=position of our mouse cursor.
+  return draggableElements.reduce((closest, child) => {
+
+    //child is each element which is draggable
+    //closest is the element we are closest to after our mouse cursor
+    
+    //box is the bounding box of each elements. shows positions of each elementt on the screen
+    const box = child.getBoundingClientRect();
+      console.log(box);
+    //getting the center of the box
+    //if offset is negative shows we are hovering above the element. if its positive we are hovering below
+    //getting center of our box
+    const offset = y - box.top - box.height / 2;
+
+/// Here, we are looking for elements that less than negative and finding the onwwhich closest to offset
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    } else {
+      return closest;
+    }
+  }, { offset: Number.NEGATIVE_INFINITY, element: null }).element; //this makes sure our initial offset has the greatest negative number
+}
+  
+
 // 
 //function used when we are dragging an element within the list container
 listContainer.addEventListener('dragover', (e) => {
@@ -340,33 +309,4 @@ listContainer.addEventListener('dragover', (e) => {
     listContainer.appendChild(draggable);
   }
 });
-// function to show where(the position) of the drag element
-function getDragAfterElement(container, y) {
 
-  //selecting elements that can be dragged.
-  const draggableElements = [...container.querySelectorAll(':not(.dragging)')];
-
-
-  //loop through the list of elements that are draggable and determine which single element which is directly after our mouse cursor position that we pass in.y=position of our mouse cursor.
-  return draggableElements.reduce((closest, child) => {
-
-    //child is each element which is draggable
-    //closest is the element we are closest to after our mouse cursor
-    
-    //box is the bounding box of each elements. shows positions of each elementt on the screen
-    const box = child.getBoundingClientRect();
-
-    //getting the center of the box
-    //if offset is negative shows we are hovering above the element. if its positive we are hovering below
-    //getting center of our box
-    const offset = y - box.top - box.height / 2;
-
-/// Here, we are looking for elements that less than negative and finding the onwwhich closest to offset
-    if (offset < 0 && offset > closest.offset) {
-      return { offset: offset, element: child };
-    } else {
-      return closest;
-    }
-  }, { offset: Number.NEGATIVE_INFINITY, element: null }).element; //this makes sure our initial offset has the greatest negative number
-}
-  
