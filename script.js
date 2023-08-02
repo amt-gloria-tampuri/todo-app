@@ -154,6 +154,14 @@ all.addEventListener('click', () => {
 
 }))
 
+allElements.forEach((all) =>
+all.addEventListener('touchend', () => {
+  activeFilter = 'all';
+  updateFilter(activeFilter);
+  location.reload()
+
+}))
+
 const completedElements = document.querySelectorAll('.completed');
 completedElements.forEach((completed) =>
   completed.addEventListener('click', () => {
@@ -163,10 +171,26 @@ completedElements.forEach((completed) =>
 
   })
 );
+completedElements.forEach((completed) =>
+  completed.addEventListener('touchend', () => {
+    activeFilter = 'completed';
+    updateFilter(activeFilter);
+    location.reload()
+   
+  })
+);
 
 const activeElements =document.querySelectorAll('.active')
 activeElements.forEach((active)=>
 active.addEventListener('click', () => {
+  activeFilter = 'active';
+    updateFilter(activeFilter);
+    location.reload()
+
+}))
+
+activeElements.forEach((active)=>
+active.addEventListener('touchend', () => {
   activeFilter = 'active';
     updateFilter(activeFilter);
     location.reload()
@@ -233,6 +257,8 @@ active.addEventListener('click', () => {
     });
   });
 
+ 
+
  saveData() 
 });
 
@@ -277,7 +303,7 @@ function getDragAfterElement(container, y) {
     
     //box is the bounding box of each elements. shows positions of each elementt on the screen
     const box = child.getBoundingClientRect();
-      console.log(box);
+     
     //getting the center of the box
     //if offset is negative shows we are hovering above the element. if its positive we are hovering below
     //getting center of our box

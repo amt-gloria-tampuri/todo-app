@@ -269,9 +269,13 @@ overflow-wrap: break-word;
         display: none;
     }
 
-@media(max-width:400px){
+    .completed:hover{
+        color: var(--list-color);
+    }
+
+@media(max-width:645px){
     body{
-        font-size: 12px;
+        font-size: 0.9rem;
     }
     .wholePage{
         overflow-y: scroll;
@@ -289,7 +293,7 @@ overflow-wrap: break-word;
     }
 
     .todo-container{
-        max-width: 323px;
+        max-width: 90%;
         margin: 0 auto;
     transform: translateY(-150px);
     }
